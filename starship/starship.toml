@@ -1,0 +1,90 @@
+# Starship prompt — https://starship.rs
+# Informative but fast. No clutter.
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$bun\
+$python\
+$rust\
+$golang\
+$cmd_duration\
+$line_break\
+$character"""
+
+# Two-line prompt: info on top, input on bottom
+add_newline = true
+
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "bold blue"
+
+[git_branch]
+format = "[$branch]($style) "
+style = "bold purple"
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+style = "bold yellow"
+conflicted = "="
+ahead = "↑"
+behind = "↓"
+diverged = "↕"
+untracked = "?"
+stashed = "$"
+modified = "!"
+staged = "+"
+deleted = "x"
+
+[nodejs]
+format = "[$symbol$version]($style) "
+symbol = "node "
+style = "green"
+detect_files = ["package.json"]
+detect_folders = []
+
+[bun]
+format = "[$symbol$version]($style) "
+symbol = "bun "
+style = "yellow"
+
+[python]
+format = "[$symbol$version]($style) "
+symbol = "py "
+style = "yellow"
+
+[rust]
+format = "[$symbol$version]($style) "
+symbol = "rs "
+style = "red"
+
+[golang]
+format = "[$symbol$version]($style) "
+symbol = "go "
+style = "cyan"
+
+[cmd_duration]
+min_time = 2_000
+format = "[$duration]($style) "
+style = "bold yellow"
+show_milliseconds = false
+
+# Disabled modules (too noisy)
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[docker_context]
+disabled = true
+
+[package]
+disabled = true

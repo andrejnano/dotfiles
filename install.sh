@@ -60,46 +60,40 @@ ok "Oh My Zsh"
 
 info "Linking dotfiles..."
 
-link_file "$DOTFILES/vim/vimrc"               "$HOME/.vimrc"
-link_file "$DOTFILES/zsh/zshrc"               "$HOME/.zshrc"
-link_file "$DOTFILES/git/gitconfig"           "$HOME/.gitconfig"
-link_file "$DOTFILES/tmux/tmux.conf"          "$HOME/.tmux.conf"
+link_file "$DOTFILES/vim/vimrc"                "$HOME/.vimrc"
+link_file "$DOTFILES/zsh/zshrc"                "$HOME/.zshrc"
+link_file "$DOTFILES/git/gitconfig"            "$HOME/.gitconfig"
+link_file "$DOTFILES/git/gitignore_global"     "$HOME/.gitignore_global"
+link_file "$DOTFILES/tmux/tmux.conf"           "$HOME/.tmux.conf"
 link_file "$DOTFILES/aerospace/aerospace.toml" "$HOME/.aerospace.toml"
+link_file "$DOTFILES/ripgrep/ripgreprc"        "$HOME/.ripgreprc"
+link_file "$DOTFILES/starship/starship.toml"   "$HOME/.config/starship.toml"
+link_file "$DOTFILES/ssh/config"               "$HOME/.ssh/config"
 
 # ── Directories ──────────────────────────────────────────
 
 mkdir -p "$HOME/.vim/undo"
 ok "~/.vim/undo directory"
 
+mkdir -p "$HOME/.ssh/sockets"
+chmod 700 "$HOME/.ssh"
+chmod 700 "$HOME/.ssh/sockets" 2>/dev/null || true
+ok "~/.ssh/sockets directory"
+
+mkdir -p "$HOME/Screenshots"
+ok "~/Screenshots directory"
+
+# ── Hushlogin ────────────────────────────────────────────
+
+touch "$HOME/.hushlogin"
+ok "~/.hushlogin (suppress 'Last login' message)"
+
 # ── macOS defaults ───────────────────────────────────────
 
 if [ "$(uname)" = "Darwin" ]; then
   info "Applying macOS defaults..."
-
-  # Key repeat speed
-  defaults write NSGlobalDomain KeyRepeat -int 2
-  defaults write NSGlobalDomain InitialKeyRepeat -int 15
-
-  # Show file extensions
-  defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-
-  # Finder: show hidden files
-  defaults write com.apple.finder AppleShowAllFiles -bool true
-
-  # Finder: show path bar
-  defaults write com.apple.finder ShowPathbar -bool true
-
-  # Disable press-and-hold for keys (enables key repeat everywhere)
-  defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
-
-  # Disable auto-correct
-  defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
-
-  # Disable smart quotes and dashes (breaks code in terminals)
-  defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-  defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
-
-  ok "macOS defaults (restart apps to apply)"
+  bash "$DOTFILES/macos/defaults.sh"
+  ok "macOS defaults"
 fi
 
 # ── Done ─────────────────────────────────────────────────

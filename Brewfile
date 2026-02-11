@@ -12,6 +12,9 @@ brew "htop"
 brew "tldr"
 brew "wget"
 
+# Prompt
+brew "starship"
+
 # Development
 brew "node"
 
