@@ -54,9 +54,9 @@ info "Mission Control: don't rearrange spaces"
 defaults write com.apple.dock mru-spaces -bool false
 
 # ── Safari (dev) ─────────────────────────────────────────
-info "Safari: dev menu, full URL"
-defaults write com.apple.Safari IncludeDevelopMenu -bool true
-defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
+# Safari prefs are sandboxed since macOS Ventura — enable manually:
+#   Safari → Settings → Advanced → Show features for web developers
+info "Safari: skipped (sandboxed — enable dev menu manually in Settings)"
 
 # ── Activity Monitor ─────────────────────────────────────
 info "Activity Monitor: show all processes, CPU icon in dock"
@@ -65,7 +65,7 @@ defaults write com.apple.ActivityMonitor IconType -int 5
 
 # ── Restart affected apps ────────────────────────────────
 info "Restarting affected apps..."
-for app in "Finder" "Dock" "SystemUIServer" "Safari"; do
+for app in "Finder" "Dock" "SystemUIServer"; do
   killall "$app" 2>/dev/null || true
 done
 
