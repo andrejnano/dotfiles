@@ -1,7 +1,5 @@
-# ── Completions ───────────────────────────────────────────
-if [[ ":$FPATH:" != *":/Users/nano/completions:"* ]]; then
-  export FPATH="/Users/nano/completions:$FPATH"
-fi
+# ── Homebrew (must be before anything that uses brew-installed tools) ──
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # ── Oh My Zsh ────────────────────────────────────────────
 export ZSH="$HOME/.oh-my-zsh"

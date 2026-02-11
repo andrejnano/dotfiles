@@ -44,7 +44,7 @@ fi
 ok "Homebrew"
 
 info "Installing packages from Brewfile..."
-brew bundle --file="$DOTFILES/Brewfile" --no-lock 2>/dev/null || true
+brew bundle --file="$DOTFILES/Brewfile" --no-lock
 ok "Brew packages"
 
 # ── Oh My Zsh ────────────────────────────────────────────

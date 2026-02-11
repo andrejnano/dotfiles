@@ -2,12 +2,11 @@
 	name = Andrej Nano
 	email = nano@andrejnano.sk
 
-[credential]
-	helper =
-	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
 
-[credential "https://dev.azure.com"]
-	useHttpPath = true
+[credential "https://gist.github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
 
 [init]
 	defaultBranch = main
