@@ -1,0 +1,89 @@
+[user]
+	name = Andrej Nano
+	email = nano@andrejnano.sk
+
+[credential]
+	helper =
+	helper = /usr/local/share/gcm-core/git-credential-manager
+
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+
+[init]
+	defaultBranch = main
+
+[core]
+	editor = vim
+	autocrlf = input
+	pager = less -FRX
+
+[push]
+	default = current
+	autoSetupRemote = true
+	followTags = true
+
+[pull]
+	rebase = true
+
+[fetch]
+	prune = true
+	prunetags = true
+
+[merge]
+	conflictstyle = zdiff3
+
+[diff]
+	algorithm = histogram
+	colorMoved = default
+	renames = copies
+
+[rebase]
+	autoStash = true
+	autoSquash = true
+
+[rerere]
+	enabled = true
+
+[alias]
+	# Log
+	lg = log --oneline --graph --all -20
+	ll = log --oneline -20
+	last = log -1 HEAD --stat
+
+	# Shortcuts
+	co = checkout
+	sw = switch
+	br = branch
+	st = status -sb
+	cm = commit
+	ca = commit --amend
+	cp = cherry-pick
+	unstage = reset HEAD --
+	undo = reset --soft HEAD~1
+
+	# Diff
+	ds = diff --staged
+	dm = diff main...HEAD
+	stat = diff --stat
+
+	# Branches
+	branches = branch -a --sort=-committerdate --format='%(refname:short) %(committerdate:relative)'
+	gone = "!git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' refs/heads | awk '$2 == \"[gone]\" {print $1}'"
+	cleanup = "!git gone | xargs -n 1 git branch -D"
+
+	# Stash
+	sl = stash list
+	sp = stash pop
+	ss = stash push -m
+
+[log]
+	date = relative
+
+[column]
+	ui = auto
+
+[branch]
+	sort = -committerdate
+
+[tag]
+	sort = -version:refname

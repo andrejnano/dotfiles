@@ -1,0 +1,145 @@
+" ── Essentials ────────────────────────────────────────────
+set nocompatible              " Vim, not vi
+set encoding=utf-8            " UTF-8 everywhere
+set backspace=indent,eol,start " Backspace works like you expect
+set hidden                    " Switch buffers without saving
+set autoread                  " Reload files changed outside Vim
+set mouse=a                   " Mouse works in all modes
+set clipboard=unnamed         " Yank/paste uses system clipboard
+set ttimeoutlen=50            " Fast escape key response
+
+" ── Visual ───────────────────────────────────────────────
+syntax on
+set background=dark
+colorscheme habamax           " Clean dark built-in scheme (Vim 9)
+set number                    " Line numbers
+set relativenumber            " Relative numbers for easy jumps (5j, 12k)
+set cursorline                " Highlight current line
+set scrolloff=8               " Keep 8 lines visible above/below cursor
+set sidescrolloff=8           " Keep 8 cols visible left/right
+set signcolumn=number         " Merge sign column into line numbers
+set showmatch                 " Flash matching bracket
+set showcmd                   " Show partial commands in status line
+set laststatus=2              " Always show status line
+set ruler                     " Cursor position in status line
+set wildmenu                  " Tab completion menu for commands
+set wildmode=longest:full,full
+
+" ── Search ───────────────────────────────────────────────
+set incsearch                 " Search as you type
+set hlsearch                  " Highlight matches
+set ignorecase                " Case-insensitive search...
+set smartcase                 " ...unless you use uppercase
+
+" ── Indentation ──────────────────────────────────────────
+set autoindent                " Copy indent from current line
+set smartindent               " Smart indent for C-like languages
+set expandtab                 " Spaces, not tabs
+set tabstop=2                 " Display width of tab character
+set shiftwidth=2              " Indent/outdent by 2
+set shiftround                " Round indent to multiple of shiftwidth
+
+" ── Editing ──────────────────────────────────────────────
+set wrap                      " Wrap long lines visually
+set linebreak                 " Wrap at word boundaries, not mid-word
+set formatoptions+=j          " Remove comment leaders when joining lines
+set nojoinspaces              " One space after period when joining
+
+" ── Undo & Swap ──────────────────────────────────────────
+set undofile                  " Persistent undo across sessions
+set undodir=~/.vim/undo//     " Keep undo files in one place
+set noswapfile                " No .swp files cluttering your dirs
+set nobackup                  " No ~ backup files
+set nowritebackup
+
+" Create undo directory if missing
+if !isdirectory(expand('~/.vim/undo'))
+  call mkdir(expand('~/.vim/undo'), 'p')
+endif
+
+" ── Performance ──────────────────────────────────────────
+set lazyredraw                " Don't redraw during macros
+set ttyfast                   " Fast terminal connection
+
+" ── Netrw (built-in file browser) ────────────────────────
+let g:netrw_banner = 0        " No banner
+let g:netrw_liststyle = 3     " Tree view
+let g:netrw_winsize = 25      " 25% width
+let g:netrw_altv = 1          " Open files in vertical split
+
+" ── Leader key ───────────────────────────────────────────
+let mapleader = " "           " Space as leader key
+
+" ── Key mappings ─────────────────────────────────────────
+" Clear search highlight
+nnoremap <leader><space> :nohlsearch<CR>
+
+" Quick save / quit
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+
+" Open file browser
+nnoremap <leader>e :Lexplore<CR>
+
+" Navigate splits with Ctrl+hjkl
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Move lines up/down in visual mode
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+" Keep cursor centered when scrolling
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+" Keep cursor centered when searching
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Y yanks to end of line (consistent with D and C)
+nnoremap Y y$
+
+" Quick buffer navigation
+nnoremap <leader>b :ls<CR>:b<Space>
+nnoremap <leader>n :bnext<CR>
+nnoremap <leader>p :bprev<CR>
+
+" Find files (built-in, recursive)
+set path+=**                  " Search into subdirectories
+nnoremap <leader>f :find *
+
+" ── Filetype settings ────────────────────────────────────
+filetype plugin indent on
+
+augroup filetypes
+  autocmd!
+  " Shell scripts
+  autocmd FileType sh,bash,zsh setlocal tabstop=2 shiftwidth=2
+  " TypeScript / JavaScript
+  autocmd FileType typescript,javascript,typescriptreact,javascriptreact
+    \ setlocal tabstop=2 shiftwidth=2
+  " JSON / YAML / TOML
+  autocmd FileType json,yaml,toml setlocal tabstop=2 shiftwidth=2
+  " Markdown
+  autocmd FileType markdown setlocal wrap linebreak spell
+  " Git commits
+  autocmd FileType gitcommit setlocal spell textwidth=72
+  " Return to last edit position when opening files
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   execute "normal! g'\"" |
+    \ endif
+augroup END
+
+" ── Status line (no plugins needed) ──────────────────────
+set statusline=
+set statusline+=\ %f          " File path
+set statusline+=\ %m%r        " Modified/readonly flags
+set statusline+=%=             " Right align
+set statusline+=\ %y          " File type
+set statusline+=\ %l:%c       " Line:column
+set statusline+=\ %p%%        " Percentage through file
+set statusline+=\
