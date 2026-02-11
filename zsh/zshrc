@@ -45,8 +45,8 @@ alias ...="cd ../.."
 alias tree="tree -C --dirsfirst"
 
 # Use better tools when available
-alias cat="bat --style=plain"
-alias grep="rg"
+(( $+commands[bat] )) && alias cat="bat --style=plain"
+(( $+commands[rg] ))  && alias grep="rg"
 
 # Git shortcuts (beyond OMZ's git plugin)
 alias gs="git status"

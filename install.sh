@@ -33,14 +33,25 @@ link_file() {
   ok "$dst → $src"
 }
 
+# ── Default shell ────────────────────────────────────────
+
+if [ "$SHELL" != "/bin/zsh" ]; then
+  info "Setting default shell to zsh..."
+  chsh -s /bin/zsh
+  ok "Default shell → zsh"
+else
+  ok "Default shell (already zsh)"
+fi
+
 # ── Homebrew ─────────────────────────────────────────────
 
 info "Checking Homebrew..."
 if ! command -v brew &>/dev/null; then
   info "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
 ok "Homebrew"
 
 info "Installing packages from Brewfile..."
